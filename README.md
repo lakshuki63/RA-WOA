@@ -118,7 +118,7 @@ pip install -r requirements.txt
 ### Running Benchmarks
 To run the optimization benchmarking on Sphere, Rastrigin, and Ackley functions:
 ```bash
-python experiments/benchmark_experiment.py
+python experiments/experiment.py
 ```
 This script will execute 20 independent runs for each algorithm and output statistics along with saving the following plots in the `assets/` directory:
 *   `assets/rawoa_convergence.png`: Mean fitness trajectory over iterations.
