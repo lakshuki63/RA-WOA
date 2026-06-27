@@ -55,3 +55,8 @@ venv.bak/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+#ignore research paper
+research_paper.md
+RA_WOA_Notebook.ipynb
+proposal.md

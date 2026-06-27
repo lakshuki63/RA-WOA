@@ -1,4 +1,4 @@
-# 🐋 RA-WOA: Reinforcement-Adaptive Whale Optimization Algorithm
+# RA-WOA: Reinforcement-Adaptive Whale Optimization Algorithm
 
 ## Complete Project Explanation
 
@@ -87,7 +87,7 @@ The WOA (Mirjalili & Lewis, 2016) simulates the **bubble-net hunting strategy** 
 ```mermaid
 graph TD
     subgraph Whale Hunting Behavior
-        A["🐋 Whale spots prey (fish school)"] --> B{"Choose Strategy"}
+        A[" Whale spots prey (fish school)"] --> B{"Choose Strategy"}
         B -->|"50% chance"| C["Shrinking Encircle\n(swim in tightening circles)"]
         B -->|"50% chance"| D["Spiral Bubble-Net\n(swim in spiral + blow bubbles)"]
         C --> E["Catch Prey"]
@@ -139,7 +139,7 @@ FOR each iteration t:
 > [!WARNING]
 > The standard WOA has **four critical weaknesses** documented in literature (2016–2025).
 
-### Weakness 1: Blind Phase Selection 🎲
+### Weakness 1: Blind Phase Selection 
 
 ```mermaid
 graph LR
@@ -152,7 +152,7 @@ graph LR
 
 **Problem**: Even when spiral consistently produces better results, the algorithm ignores this signal. There is **zero learning** — every iteration makes a fresh random choice.
 
-### Weakness 2: Rigid Linear Decay 📉
+### Weakness 2: Rigid Linear Decay 
 
 The parameter `a` controls exploration vs exploitation:
 - `a = 2` → full exploration (early)
@@ -161,13 +161,13 @@ The parameter `a` controls exploration vs exploitation:
 
 **Problem**: If the population has already converged at iteration 100 (out of 500), the algorithm **doesn't know** — it keeps following its rigid schedule. It cannot react to the actual search state.
 
-### Weakness 3: Weak Exploration 🔍
+### Weakness 3: Weak Exploration 
 
 When `|A| > 1`, WOA selects a **random whale** for exploration. This is a crude mechanism compared to:
 - Lévy flights (Cuckoo Search) — heavy-tailed random walks that can make **big jumps**
 - Gaussian mutation (GA) — structured perturbation
 
-### Weakness 4: No Memory 🧠
+### Weakness 4: No Memory 
 
 WOA is **memoryless**. It doesn't track:
 - Which strategy worked better in recent iterations
@@ -185,7 +185,7 @@ WOA is **memoryless**. It doesn't track:
 
 ### 5.2 The Three Modifications
 
-#### 🔴 Modification 1: UCB1 Multi-Armed Bandit Strategy Selection
+####  Modification 1: UCB1 Multi-Armed Bandit Strategy Selection
 
 **The Multi-Armed Bandit Problem (Analogy)**:
 
@@ -212,7 +212,7 @@ Score(arm k) = Average_Reward(k) + C × √(ln(Total_Plays) / Plays_of_k)
 
 The UCB1 bandit **learns** which arm produces the best fitness improvements and gradually favors it — while still occasionally trying others.
 
-#### 🔴 Modification 2: Diversity-Aware Adaptive `a` Parameter
+####  Modification 2: Diversity-Aware Adaptive `a` Parameter
 
 Instead of `a = 2 - 2t/T` (blind schedule), we measure **how spread out the whales are**:
 
@@ -230,7 +230,7 @@ graph TD
 - **High diversity** → whales are spread out → normal schedule is fine
 - **Low diversity** → whales collapsed together → DANGER: premature convergence → boost `a` to push whales apart
 
-#### 🔴 Modification 3: Lévy Flight Enhanced Exploration
+####  Modification 3: Lévy Flight Enhanced Exploration
 
 When Arm 2 (exploration) is selected, instead of the weak "random whale" approach, we use **Lévy flights**:
 
@@ -398,46 +398,40 @@ Using Mantegna's approximation with β = 1.5.
 | Population size | 30 |
 | Max iterations | 500 |
 | Independent runs | 10 (different seeds) |
-| Algorithms compared | WOA, RA-WOA, Random Search |
-| Benchmarks | Sphere, Rastrigin, Ackley |
+| Benchmarks | Sphere, Schwefel, Shifted Rastrigin |
 
 ### 9.2 Convergence Curves
 
-The convergence curves show **how fast each algorithm finds the optimum** over 500 iterations (lower is better, log scale):
+The convergence curves show the optimization process over iterations (lower is better, log scale):
 
-![Convergence comparison across all three benchmark functions showing RA-WOA (green) consistently reaching lower fitness values than standard WOA (red) and Random Search (gray)](../assets/convergence_curves.png)
+![Convergence comparison across all three benchmark functions](../assets/rawoa_convergence.png)
 
 **Key observations:**
-- **Sphere** (unimodal): Both WOA and RA-WOA converge excellently; RA-WOA is competitive
-- **Rastrigin** (multimodal): RA-WOA shows **dramatically better** convergence — the UCB1 bandit learns to use Lévy flights to escape local optima
-- **Ackley** (deceptive): RA-WOA converges faster and deeper than standard WOA
-- **Random Search**: Orders of magnitude worse on all functions
+- **Sphere** (unimodal): Standard WOA converges faster and deeper than RA-WOA. This is because a smooth unimodal bowl requires 100% aggressive exploitation, whereas RA-WOA wastes exploration effort.
+- **Schwefel** (deceptive multimodal): Standard WOA outperforms RA-WOA. Schwefel is highly deceptive, but standard WOA's aggressive focus on the current best solution allows it to converge to a better mean value under the fixed computational budget.
+- **Shifted Rastrigin** (multimodal): Standard WOA beats RA-WOA. While Shifted Rastrigin shifts the global optimum away from the origin, standard WOA's simple, aggressive exploitation still results in better overall performance compared to RA-WOA under the tested parameters.
+- **Random Search**: Remains orders of magnitude worse on all functions, serving as a baseline.
 
 ### 9.3 Final Fitness Distribution (Box Plots)
 
-![Box plot comparison of final fitness values across 10 runs for each algorithm on each benchmark](../assets/fitness_boxplot.png)
+![Box plot comparison of final fitness values across 10 runs for each algorithm on each benchmark](../assets/rawoa_boxplot.png)
 
 **Key observations:**
-- WOA and RA-WOA both achieve near-zero fitness on all benchmarks
-- Random Search is stuck at very high fitness values (~44000 on Sphere, ~340 on Rastrigin, ~20 on Ackley)
-- RA-WOA shows **tighter distributions** (more consistent) than standard WOA
+- Standard WOA exhibits lower mean fitness and tighter distributions on all three benchmarks.
+- RA-WOA has larger variance on these standard benchmarks, as its exploration mechanism (Lévy flights and diversity adaptation) prevents it from executing pure, rapid exploitation in landscapes where quick convergence is heavily rewarded.
 
 ### 9.4 Arm Selection Analysis (UCB1 Learning)
 
-This is the most interesting result — it shows **what the bandit learned**:
-
-![Cumulative arm selection proportions over iterations for each benchmark, showing how the UCB1 bandit adapts strategy usage](../assets/arm_selection.png)
+This shows what the UCB1 reinforcement learning bandit inside RA-WOA learned:
 
 **Key observations:**
-- **Sphere** (easy): Spiral dominates (~80%) — the bandit learned that directed exploitation is best for a simple bowl
-- **Rastrigin** (hard multimodal): More balanced usage with Spiral still dominant but Encircling used more (~40%) — the bandit adapts to the complex landscape
-- **Ackley**: Similar to Sphere — Spiral dominates with Encircling as secondary
-- **Lévy Exploration** is used sparingly but strategically — exactly when the population needs diversity
-
-> [!NOTE]
-> This adaptive behavior is **impossible** in standard WOA, which always uses a 50/50 random split regardless of the problem landscape.
+- The bandit adapts the choice of strategies (Encircling, Spiral, Lévy) dynamically based on the reward received.
+- On simple unimodal landscapes (Sphere), exploitation strategies are favored once found to be highly rewarding.
+- On deceptive landscapes, the bandit dynamically balances the exploitation strategies (Spiral/Encircling) and exploration (Lévy) to attempt to maintain population diversity, even though this hampers fast convergence compared to standard WOA's raw aggressive approach.
 
 ### 9.5 2D Trajectory Visualization
+
+The search trajectory comparisons visualizes search agent pathing in 2D space. Standard WOA moves directly to convergence points, while RA-WOA shows broader space coverage due to Lévy jumps.
 
 ![2D search trajectories on the Rastrigin surface comparing Standard WOA and RA-WOA, showing initial (white), mid (yellow), and final (red) positions](../assets/trajectory_2d.png)
 
