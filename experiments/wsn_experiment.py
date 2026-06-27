@@ -283,10 +283,14 @@ for sp in ax4.spines.values(): sp.set_edgecolor('#30363d')
 ax4.set_ylim(0, NUM_RUNS+2)
 ax4.grid(True, alpha=0.15, color='white', axis='y')
 
+import os
+assets_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'assets'))
+os.makedirs(assets_dir, exist_ok=True)
+
 fig.suptitle("WSN Cluster Head Selection: RA-WOA vs Standard WOA",
              fontsize=15, fontweight='bold', color=TXT, y=1.01)
 plt.tight_layout()
-out = r"d:\12345\daa\wsn_rawoa_result.png"
+out = os.path.join(assets_dir, "wsn_rawoa_result.png")
 plt.savefig(out, dpi=150, bbox_inches='tight', facecolor=BG)
 plt.close()
 print(f"\nPlot saved: {out}")

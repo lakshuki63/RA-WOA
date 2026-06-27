@@ -213,9 +213,13 @@ for col, name in enumerate(names):
     ax2.grid(True, alpha=0.1, color='white')
     ax2.set_ylim(0,1)
 
+import os
+assets_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'assets'))
+os.makedirs(assets_dir, exist_ok=True)
+
 fig.suptitle("RA-WOA vs WOA: Convergence and Strategy Adaptation",
              fontsize=15, fontweight='bold', color=TXT, y=0.99)
-out1 = r"d:\12345\daa\rawoa_convergence.png"
+out1 = os.path.join(assets_dir, "rawoa_convergence.png")
 plt.savefig(out1, dpi=150, bbox_inches='tight', facecolor=BG)
 plt.close()
 print(f"Saved: {out1}")
@@ -246,7 +250,7 @@ for col, name in enumerate(names):
 fig2.suptitle(f"Final Fitness Distribution ({NUM_RUNS} runs) — Lower is Better",
               fontsize=13, fontweight='bold', color=TXT)
 plt.tight_layout()
-out2 = r"d:\12345\daa\rawoa_boxplot.png"
+out2 = os.path.join(assets_dir, "rawoa_boxplot.png")
 plt.savefig(out2, dpi=150, bbox_inches='tight', facecolor=BG)
 plt.close()
 print(f"Saved: {out2}")

@@ -82,19 +82,27 @@ When the bandit identifies exploitation stagnation, it pulls the Lévy Flight ar
 ## 📂 Repository Structure
 
 ```
-├── ra_woa_core.py                  # Core implementations of Standard WOA, RA-WOA, and Random Search
-├── experiment_rawoa_vs_woa.py       # Benchmark script running Sphere, Rastrigin, and Ackley tests
-├── wsn_experiment.py               # Practical simulation & optimization for WSN Cluster Head selection
-├── gen_notebook.py                 # Script to programmatically construct the project notebook
-├── RA_WOA_Notebook.ipynb           # Generated Jupyter Notebook detailing code and theory
-├── RA_WOA_Executed.ipynb           # Pre-executed Jupyter Notebook with rendered plots
-├── project_explanation.md          # Comprehensive project details and mathematical formulations
-├── wsn_explanation.md              # In-depth analysis of why RA-WOA outperforms WOA in WSN domains
-├── benchmark_vs_wsn_explanation.md  # Comparative landscape analysis
-├── research_paper.md               # Draft detailing the formulation and theoretical background
-├── explanation.pdf                 # Compiled document containing project insights
-├── *.png                           # Result plots (convergence, boxplots, trajectories, WSN layouts)
-└── .gitignore                      # Python/Jupyter/IDE Git exclusion file
+├── src/
+│   └── ra_woa.py                     # Core implementations of Standard WOA, RA-WOA, and Random Search
+├── experiments/
+│   ├── benchmark_experiment.py        # Benchmark script running Sphere, Rastrigin, and Ackley tests
+│   └── wsn_experiment.py              # Practical simulation & optimization for WSN Cluster Head selection
+├── notebooks/
+│   ├── gen_notebook.py                # Script to programmatically construct the project notebook
+│   ├── RA_WOA_Notebook.ipynb          # Clean notebook (unexecuted)
+│   └── RA_WOA_Executed.ipynb          # Pre-executed Jupyter Notebook with rendered plots
+├── docs/
+│   ├── project_explanation.md         # Comprehensive project details and mathematical formulations
+│   ├── wsn_explanation.md             # In-depth analysis of why RA-WOA outperforms WOA in WSN domains
+│   ├── benchmark_vs_wsn_explanation.md # Comparative landscape analysis
+│   ├── research_paper.md              # Draft detailing the formulation and theoretical background
+│   └── explanation.pdf                # Compiled document containing project insights
+├── assets/
+│   └── *.png                          # Result plots (convergence, boxplots, trajectories, WSN layouts)
+├── .gitignore                         # Python/Jupyter/IDE Git exclusion file
+├── LICENSE                            # MIT License file
+├── README.md                          # Main repository readme
+└── requirements.txt                   # Project dependencies list
 ```
 
 ---
@@ -102,28 +110,28 @@ When the bandit identifies exploitation stagnation, it pulls the Lévy Flight ar
 ## ⚙️ Getting Started
 
 ### Prerequisites
-Make sure you have Python 3.8+ and the following packages installed:
+Make sure you have Python 3.8+ and install the dependencies:
 ```bash
-pip install numpy matplotlib scipy jupyter
+pip install -r requirements.txt
 ```
 
 ### Running Benchmarks
 To run the optimization benchmarking on Sphere, Rastrigin, and Ackley functions:
 ```bash
-python experiment_rawoa_vs_woa.py
+python experiments/benchmark_experiment.py
 ```
-This script will execute 20 independent runs for each algorithm and output statistics along with saving the following plots:
-*   `convergence_curves.png`: Mean fitness trajectory over iterations.
-*   `fitness_boxplot.png`: Statistical variance of the algorithms.
+This script will execute 20 independent runs for each algorithm and output statistics along with saving the following plots in the `assets/` directory:
+*   `assets/rawoa_convergence.png`: Mean fitness trajectory over iterations.
+*   `assets/rawoa_boxplot.png`: Statistical variance of the algorithms.
 
 ### Running WSN Experiments
 To run the Wireless Sensor Network Cluster Head Selection simulation:
 ```bash
-python wsn_experiment.py
+python experiments/wsn_experiment.py
 ```
 This script places 100 sensors across a $100\text{m} \times 100\text{m}$ grid and optimizes the placement of 6 cluster heads to minimize node-to-head communication distance.
 *   Outputs the statistical comparison over 20 runs.
-*   Saves `wsn_rawoa_result.png` showing the node distribution, optimized cluster heads, and connectivity lines.
+*   Saves `assets/wsn_rawoa_result.png` showing the node distribution, optimized cluster heads, and connectivity lines.
 
 ---
 
@@ -152,21 +160,21 @@ In the WSN cluster head assignment, Standard WOA frequently stagnates in sub-opt
 
 Here are some of the key output figures generated during the experiments:
 
-### 1. WSN Cluster Head Optimization (`wsn_rawoa_result.png`)
+### 1. WSN Cluster Head Optimization (`assets/wsn_rawoa_result.png`)
 Shows the final 100-node network with the 6 optimized cluster heads and node-head cluster memberships.
-![WSN Cluster Head Layout](wsn_rawoa_result.png)
+![WSN Cluster Head Layout](assets/wsn_rawoa_result.png)
 
-### 2. Multi-Armed Bandit Arm Selection (`arm_selection.png`)
+### 2. Multi-Armed Bandit Arm Selection (`assets/arm_selection.png`)
 Demonstrates how the UCB1 algorithm dynamically learns to favor exploitation (Encircling/Spiral) or exploration (Lévy Flight) as iterations progress.
-![Arm Selection Frequency](arm_selection.png)
+![Arm Selection Frequency](assets/arm_selection.png)
 
-### 3. Convergence Curves (`convergence_curves.png`)
+### 3. Convergence Curves (`assets/convergence_curves.png`)
 Comparison of convergence speed and stability on benchmark functions.
-![Convergence Curves](convergence_curves.png)
+![Convergence Curves](assets/convergence_curves.png)
 
-### 4. 2D Search Space Trajectory (`trajectory_2d.png`)
+### 4. 2D Search Space Trajectory (`assets/trajectory_2d.png`)
 Visualizing search agent pathing in 2D space.
-![2D Search Trajectory](trajectory_2d.png)
+![2D Search Trajectory](assets/trajectory_2d.png)
 
 ---
 

@@ -364,11 +364,11 @@ Using Mantegna's approximation with β = 1.5.
 
 | File | Purpose |
 |---|---|
-| [ra_woa_core.py](file:///d:/12345/daa/ra_woa_core.py) | Core implementations: Standard WOA, RA-WOA, Random Search, benchmarks |
-| [gen_notebook.py](file:///d:/12345/daa/gen_notebook.py) | Generates the Jupyter notebook with all experiments |
-| [RA_WOA_Notebook.ipynb](file:///d:/12345/daa/RA_WOA_Notebook.ipynb) | Clean notebook (unexecuted) |
-| [RA_WOA_Executed.ipynb](file:///d:/12345/daa/RA_WOA_Executed.ipynb) | Fully executed notebook with all results |
-| [proposal.md](file:///d:/12345/daa/proposal.md) | Original proposal document |
+| [src/ra_woa.py](file:///d:/12345/daa/src/ra_woa.py) | Core implementations: Standard WOA, RA-WOA, Random Search, benchmarks |
+| [notebooks/gen_notebook.py](file:///d:/12345/daa/notebooks/gen_notebook.py) | Generates the Jupyter notebook with all experiments |
+| [notebooks/RA_WOA_Notebook.ipynb](file:///d:/12345/daa/notebooks/RA_WOA_Notebook.ipynb) | Clean notebook (unexecuted) |
+| [notebooks/RA_WOA_Executed.ipynb](file:///d:/12345/daa/notebooks/RA_WOA_Executed.ipynb) | Fully executed notebook with all results |
+| [docs/proposal.md](file:///d:/12345/daa/docs/proposal.md) | Original proposal document |
 
 ### 8.2 Key Functions
 
@@ -405,7 +405,7 @@ Using Mantegna's approximation with β = 1.5.
 
 The convergence curves show **how fast each algorithm finds the optimum** over 500 iterations (lower is better, log scale):
 
-![Convergence comparison across all three benchmark functions showing RA-WOA (green) consistently reaching lower fitness values than standard WOA (red) and Random Search (gray)](C:/Users/VICTUS/.gemini/antigravity/brain/3cedda82-adad-45c2-9075-36780a801279/artifacts/convergence_curves.png)
+![Convergence comparison across all three benchmark functions showing RA-WOA (green) consistently reaching lower fitness values than standard WOA (red) and Random Search (gray)](../assets/convergence_curves.png)
 
 **Key observations:**
 - **Sphere** (unimodal): Both WOA and RA-WOA converge excellently; RA-WOA is competitive
@@ -415,7 +415,7 @@ The convergence curves show **how fast each algorithm finds the optimum** over 5
 
 ### 9.3 Final Fitness Distribution (Box Plots)
 
-![Box plot comparison of final fitness values across 10 runs for each algorithm on each benchmark](C:/Users/VICTUS/.gemini/antigravity/brain/3cedda82-adad-45c2-9075-36780a801279/artifacts/fitness_boxplot.png)
+![Box plot comparison of final fitness values across 10 runs for each algorithm on each benchmark](../assets/fitness_boxplot.png)
 
 **Key observations:**
 - WOA and RA-WOA both achieve near-zero fitness on all benchmarks
@@ -426,7 +426,7 @@ The convergence curves show **how fast each algorithm finds the optimum** over 5
 
 This is the most interesting result — it shows **what the bandit learned**:
 
-![Cumulative arm selection proportions over iterations for each benchmark, showing how the UCB1 bandit adapts strategy usage](C:/Users/VICTUS/.gemini/antigravity/brain/3cedda82-adad-45c2-9075-36780a801279/artifacts/arm_selection.png)
+![Cumulative arm selection proportions over iterations for each benchmark, showing how the UCB1 bandit adapts strategy usage](../assets/arm_selection.png)
 
 **Key observations:**
 - **Sphere** (easy): Spiral dominates (~80%) — the bandit learned that directed exploitation is best for a simple bowl
@@ -439,7 +439,7 @@ This is the most interesting result — it shows **what the bandit learned**:
 
 ### 9.5 2D Trajectory Visualization
 
-![2D search trajectories on the Rastrigin surface comparing Standard WOA and RA-WOA, showing initial (white), mid (yellow), and final (red) positions](C:/Users/VICTUS/.gemini/antigravity/brain/3cedda82-adad-45c2-9075-36780a801279/artifacts/trajectory_2d.png)
+![2D search trajectories on the Rastrigin surface comparing Standard WOA and RA-WOA, showing initial (white), mid (yellow), and final (red) positions](../assets/trajectory_2d.png)
 
 ---
 

@@ -236,7 +236,7 @@ Each algorithm was run with the same 10 random seeds (seed = run × 42 + 7) for 
 
 Figure 2 presents the mean convergence curves with standard deviation bands across 10 independent runs.
 
-![Convergence comparison: WOA vs RA-WOA vs Random Search on Sphere, Rastrigin, and Ackley functions](C:/Users/VICTUS/.gemini/antigravity/brain/3cedda82-adad-45c2-9075-36780a801279/artifacts/convergence_curves.png)
+![Convergence comparison: WOA vs RA-WOA vs Random Search on Sphere, Rastrigin, and Ackley functions](../assets/convergence_curves.png)
 *Figure 2: Convergence curves (mean ± std, log scale) across 10 runs*
 
 **Observations:**
@@ -249,7 +249,7 @@ Figure 2 presents the mean convergence curves with standard deviation bands acro
 
 Figure 3 shows the final fitness distribution across 10 runs as box plots.
 
-![Box plot of final fitness distributions](C:/Users/VICTUS/.gemini/antigravity/brain/3cedda82-adad-45c2-9075-36780a801279/artifacts/fitness_boxplot.png)
+![Box plot of final fitness distributions](../assets/fitness_boxplot.png)
 *Figure 3: Final fitness distribution across 10 independent runs*
 
 Both WOA and RA-WOA achieve near-zero fitness on all benchmarks, vastly outperforming Random Search. RA-WOA demonstrates slightly tighter distributions, indicating more consistent performance across different random initializations.
@@ -258,7 +258,7 @@ Both WOA and RA-WOA achieve near-zero fitness on all benchmarks, vastly outperfo
 
 Figure 4 illustrates the learned strategy allocation by the UCB1 bandit.
 
-![Arm selection proportions over iterations](C:/Users/VICTUS/.gemini/antigravity/brain/3cedda82-adad-45c2-9075-36780a801279/artifacts/arm_selection.png)
+![Arm selection proportions over iterations](../assets/arm_selection.png)
 *Figure 4: Cumulative arm selection proportions learned by UCB1*
 
 **Key findings:**
@@ -270,7 +270,7 @@ This adaptive behavior demonstrates that the UCB1 bandit successfully learns pro
 
 ### 5.4 Search Trajectory Visualization
 
-![2D trajectory comparison on Rastrigin surface](C:/Users/VICTUS/.gemini/antigravity/brain/3cedda82-adad-45c2-9075-36780a801279/artifacts/trajectory_2d.png)
+![2D trajectory comparison on Rastrigin surface](../assets/trajectory_2d.png)
 *Figure 5: 2D Rastrigin search trajectories — Initial (white), Mid (yellow), Final (red)*
 
 The 2D visualization confirms that both algorithms converge toward the global optimum at the origin, with RA-WOA showing more structured convergence patterns due to its intelligent strategy selection.
